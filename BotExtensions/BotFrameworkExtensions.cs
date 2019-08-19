@@ -20,6 +20,7 @@ namespace FirstBot
         {
             if (value == null)
                 return null;
+
             return Convert.ToString((JObject.Parse(value.ToString()))?.GetValue("IntentAction"));
         }
     }

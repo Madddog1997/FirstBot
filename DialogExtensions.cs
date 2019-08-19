@@ -87,7 +87,6 @@ namespace FirstBot
             {
                 dispatchDict = new Dictionary<string, Func<DialogContext, Task>>();
 
-
                 Func<DialogContext, Task<DialogTurnResult>> foodDialogFunc = async (context) =>
                 {
                     return await context.BeginDialogAsync(nameof(FoodDialog));
