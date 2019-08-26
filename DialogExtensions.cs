@@ -22,6 +22,8 @@ namespace FirstBot
             //Dialogs
             dialogSet.Add(new FoodDialog(nameof(FoodDialog)));
             dialogSet.Add(new FlightDialog(nameof(FlightDialog)));
+            dialogSet.Add(new TestDialog(nameof(TestDialog)));
+            dialogSet.Add(new FuckDialog(nameof(FuckDialog)));
             
             //Prompts
             dialogSet.Add(new TextPrompt(nameof(TextPrompt)));

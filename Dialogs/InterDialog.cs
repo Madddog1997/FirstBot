@@ -1,16 +1,16 @@
-﻿using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Schema;
+﻿using Microsoft.Bot.Builder.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using static FirstBot.BotExtensions.ContextExtensions;
 
 namespace FirstBot.Dialogs
 {
     public abstract class InterDialog : Dialog
     {
+        private int num = 0;
+
         public InterDialog(string dialogId) : base(dialogId)
         {
         }
@@ -19,12 +19,52 @@ namespace FirstBot.Dialogs
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext outerDc, object options = null, CancellationToken cancellationToken = default)
         {
-            if(await outerDc.HandleValueRedirection(this))
+            if (await outerDc.HandleValueRedirection(this))
             {
                 return new DialogTurnResult(DialogTurnStatus.Complete);
             }
 
             return await BeginDialogAsync2(outerDc, options, cancellationToken);
+        }
+
+        public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
+        {
+            num++;
+            if (dc.ActiveDialog.State.ContainsKey("Handler") && dc.ActiveDialog.State["Handler"] != null)
+            {
+                string methodName = (string)dc.ActiveDialog.State["Handler"];
+                MethodInfo mi = this.GetType().GetMethod(methodName);
+                DialogCommandHandler Handler = (DialogCommandHandler)Delegate.CreateDelegate(typeof(DialogCommandHandler), this, mi);
+
+                if (Handler != null)
+                {
+                    dc.ActiveDialog.State["Handler"] = null;
+                    return await Handler(dc, num.ToString());
+                }
+            }
+
+            await dc.Context.SendActivityAsync("No next step defined");
+            return new DialogTurnResult(DialogTurnStatus.Waiting);
+        }
+
+        public override async Task<DialogTurnResult> ResumeDialogAsync(DialogContext dc, DialogReason reason, object result = null, CancellationToken cancellationToken = default)
+        {
+            num++;
+            if (dc.ActiveDialog.State.ContainsKey("Handler") && dc.ActiveDialog.State["Handler"] != null)
+            {
+                string methodName = (string)dc.ActiveDialog.State["Handler"];
+                MethodInfo mi = this.GetType().GetMethod(methodName);
+                DialogCommandHandler Handler = (DialogCommandHandler)Delegate.CreateDelegate(typeof(DialogCommandHandler), this, mi);
+
+                if (Handler != null)
+                {
+                    dc.ActiveDialog.State["Handler"] = null;
+                    return await Handler(dc, result);
+                }
+            }
+
+            await dc.Context.SendActivityAsync("No next step defined");
+            return new DialogTurnResult(DialogTurnStatus.Waiting);
         }
     }
 }

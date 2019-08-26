@@ -3,6 +3,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -125,7 +126,6 @@ namespace FirstBot.Dialogs
         public override async Task<DialogTurnResult> ResumeDialogAsync(DialogContext dc, DialogReason reason, object result = null, CancellationToken cancellationToken = default)
         {
             string nextStep = (string)dc.ActiveDialog.State["stepID"];
-
             dc.ActiveDialog.State[nextStep] = dc.Context.Activity.Text;
             return await ContinueDialogAsync(dc, cancellationToken);
         }
@@ -153,6 +153,11 @@ namespace FirstBot.Dialogs
             dc.Context.Activity.Value = null;
 
             await CardConfirmed(dc);
+        }
+
+        public override Task EndDialogAsync(ITurnContext turnContext, DialogInstance instance, DialogReason reason, CancellationToken cancellationToken = default)
+        {
+            return base.EndDialogAsync(turnContext, instance, reason, cancellationToken);
         }
     }
 }

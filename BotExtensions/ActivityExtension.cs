@@ -19,7 +19,6 @@ namespace FirstBot
             var intentName = messageActivity?.Value.GetIntentFromMessageValue();
             var intentAction = messageActivity?.Value.GetIntentActionFromMessageValue();
 
-
             if (!string.IsNullOrEmpty(intentName) && !string.IsNullOrEmpty(intentAction))
             {
                 var comparisonAttribute = new IntentActionAtribute(intentName, intentAction);
@@ -29,6 +28,7 @@ namespace FirstBot
                     .OfType<IntentActionAtribute>()
                     .Any(n => n.Equals(comparisonAttribute)));
                 var method = methods.FirstOrDefault();
+
                 if(method == null)
                 {
                     return false;

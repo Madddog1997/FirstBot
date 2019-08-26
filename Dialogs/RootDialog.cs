@@ -1,4 +1,5 @@
 ﻿using FirstBot.Dialogs;
+using FirstBot.State;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
@@ -24,7 +25,6 @@ namespace FirstBot.Dialogs
         {
             await dc.Context.SendActivityAsync("Food or Flight?");
             return new DialogTurnResult(DialogTurnStatus.Waiting);
-
         }
 
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
@@ -32,19 +32,21 @@ namespace FirstBot.Dialogs
             RecognizerResult result = await _recognizer.RecognizeAsync(dc.Context, cancellationToken);
             string intent = result.GetTopScoringIntent().intent;
 
-            if(intent == "Food")
-            {
-                return await dc.BeginDialogAsync(nameof(FoodDialog));
-            }
-            else if (intent == "Flight")
-            {
-                return await dc.BeginDialogAsync(nameof(FlightDialog));
-            }
-            else
-            {
-                await dc.Context.SendActivityAsync("I don't understand");
-                return new DialogTurnResult(DialogTurnStatus.Waiting);
-            }
+            return await dc.BeginDialogAsync(nameof(TestDialog));
+
+            //if(intent == "Food")
+            //{
+            //    return await dc.BeginDialogAsync(nameof(FoodDialog));
+            //}
+            //else if (intent == "Flight")
+            //{
+            //    return await dc.BeginDialogAsync(nameof(FlightDialog));
+            //}
+            //else
+            //{
+            //    await dc.Context.SendActivityAsync("I don't understand");
+            //    return new DialogTurnResult(DialogTurnStatus.Waiting);
+            //}
         }
 
         public override async Task<DialogTurnResult> ResumeDialogAsync(DialogContext dc, DialogReason reason, object result = null, CancellationToken cancellationToken = default)
@@ -55,7 +57,7 @@ namespace FirstBot.Dialogs
             }
             else
             {
-                await dc.Context.SendActivityAsync("Force cancel");
+                await dc.Context.SendActivityAsync("End");
                 return await dc.EndDialogAsync("End root");
             }
         }
