@@ -16,7 +16,7 @@ namespace FirstBot.Dialogs
     {
         private readonly LuisRecognizer _recognizer;
 
-        public RootDialog(string dialogId, LuisRecognizer recognizer) : base(dialogId)
+        public RootDialog(LuisRecognizer recognizer) : base(nameof(RootDialog))
         {
             _recognizer = recognizer;
         }

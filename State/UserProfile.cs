@@ -1,17 +1,10 @@
-﻿using FirstBot.BotExtensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static FirstBot.BotExtensions.ContextExtensions;
+﻿using Newtonsoft.Json;
 
 namespace FirstBot.State
 {
     public class UserProfile
     {
         public string Name { get; set; }
-
-        public DialogCommandHandler Handler { get; set; }
     }
 
     public class ConversationData

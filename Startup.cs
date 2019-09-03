@@ -44,8 +44,8 @@ namespace FirstBot
             services.AddSingleton<ConversationState>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddSingleton<RootDialog>(s => new RootDialog(nameof(RootDialog), new LuisRecognizer(new LuisApplication("0143846c-cd6d-45b5-87cf-2f0148a9bb48", "6ac14ad4850b4d598a92227b3cc77748", "https://westus.api.cognitive.microsoft.com"))));
 
+            services.AddSingleton<RootDialog>(s => new RootDialog(new LuisRecognizer(new LuisApplication("0143846c-cd6d-45b5-87cf-2f0148a9bb48", "6ac14ad4850b4d598a92227b3cc77748", "https://westus.api.cognitive.microsoft.com"))));
             services.AddBot<EchoBot<RootDialog>>(opt =>
             {
                 //opt.Middleware.Add(new CancelAndHelp());

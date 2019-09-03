@@ -1,4 +1,5 @@
 ﻿using FirstBot.Dialogs;
+using FirstBot.State;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
@@ -20,11 +21,11 @@ namespace FirstBot
             dialogSet.Add(dialog);
 
             //Dialogs
-            dialogSet.Add(new FoodDialog(nameof(FoodDialog)));
-            dialogSet.Add(new FlightDialog(nameof(FlightDialog)));
-            dialogSet.Add(new TestDialog(nameof(TestDialog)));
-            dialogSet.Add(new FuckDialog(nameof(FuckDialog)));
-            
+            dialogSet.Add(new FoodDialog());
+            dialogSet.Add(new FlightDialog());
+            dialogSet.Add(new TestDialog());
+            dialogSet.Add(new FuckDialog());
+
             //Prompts
             dialogSet.Add(new TextPrompt(nameof(TextPrompt)));
             dialogSet.Add(new ChoicePrompt(nameof(ChoicePrompt)));
@@ -32,7 +33,7 @@ namespace FirstBot
             DialogContext dialogContext = await dialogSet.CreateContextAsync(turnContext, cancellationToken);
 
             InitState();
-           
+
             try
             {
                 #region Cancel And Help

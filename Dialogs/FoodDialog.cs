@@ -12,7 +12,7 @@ namespace FirstBot.Dialogs
 {
     public class FoodDialog : InterDialog
     {
-        public FoodDialog(string dialogId) : base(dialogId)
+        public FoodDialog() : base(nameof(FoodDialog))
         {
         }
 

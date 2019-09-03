@@ -1,21 +1,31 @@
 ﻿using Microsoft.Bot.Builder.Dialogs;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FirstBot.BotExtensions
 { 
     public static class ContextExtensions
     {
-        public delegate Task<DialogTurnResult> DialogCommandHandler(DialogContext context, object options = null);
+        public delegate Task<DialogTurnResult> DialogCommandHandler(DialogContext context, object options = null, CancellationToken cancellationToken = default);
 
-        public static DialogTurnResult Wait(this DialogContext dc, string methodName)
+        public static DialogTurnResult Wait(this DialogContext dc, DialogCommandHandler method)
         {
-            dc.ActiveDialog.State["Handler"]  = methodName;
+            MethodInfo mi = method.Method;
+            dc.ActiveDialog.State["Handler"] = mi.Name;
+                       
             return new DialogTurnResult(DialogTurnStatus.Waiting);
         }
 
-        public static async Task<DialogTurnResult> Wait(this DialogContext dc, string methodName, string dialogName)
+        public static async Task<DialogTurnResult> Wait(this DialogContext dc, DialogCommandHandler method, string dialogName)
         {
-            dc.ActiveDialog.State["Handler"] = methodName;
+            MethodInfo mi = method.Method;
+            dc.ActiveDialog.State["Handler"] = mi.Name;
+
             await dc.BeginDialogAsync(dialogName);
             return new DialogTurnResult(DialogTurnStatus.Waiting);
         }

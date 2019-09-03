@@ -9,9 +9,7 @@ namespace FirstBot.Dialogs
 {
     public abstract class InterDialog : Dialog
     {
-        private int num = 0;
-
-        public InterDialog(string dialogId) : base(dialogId)
+        public InterDialog(string id) : base(id)
         {
         }
 
@@ -29,7 +27,6 @@ namespace FirstBot.Dialogs
 
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
-            num++;
             if (dc.ActiveDialog.State.ContainsKey("Handler") && dc.ActiveDialog.State["Handler"] != null)
             {
                 string methodName = (string)dc.ActiveDialog.State["Handler"];
@@ -39,7 +36,7 @@ namespace FirstBot.Dialogs
                 if (Handler != null)
                 {
                     dc.ActiveDialog.State["Handler"] = null;
-                    return await Handler(dc, num.ToString());
+                    return await Handler(dc);
                 }
             }
 
@@ -49,7 +46,6 @@ namespace FirstBot.Dialogs
 
         public override async Task<DialogTurnResult> ResumeDialogAsync(DialogContext dc, DialogReason reason, object result = null, CancellationToken cancellationToken = default)
         {
-            num++;
             if (dc.ActiveDialog.State.ContainsKey("Handler") && dc.ActiveDialog.State["Handler"] != null)
             {
                 string methodName = (string)dc.ActiveDialog.State["Handler"];

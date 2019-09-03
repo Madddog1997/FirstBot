@@ -13,7 +13,7 @@ namespace FirstBot.Dialogs
 {
     public class FlightDialog : InterDialog
     {
-        public FlightDialog(string dialogId) : base(dialogId)
+        public FlightDialog() : base(nameof(FlightDialog))
         {
         }
 
