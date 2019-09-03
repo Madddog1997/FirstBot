@@ -1,9 +1,5 @@
-*.dll
-*.pdb
-obj/**
-bin/**
-runtimes/**
-/.vs/EchoBot/v16
-/InnogyBotDev.bot
-*.bot
-/.vs/FirstBot
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/FirstBot/v16/Server/sqlite3
