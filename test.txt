@@ -1,1 +1,0 @@
-FirstBot.BotExtensions.ContextExtensions+DialogCommandHandler

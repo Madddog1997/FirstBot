@@ -1,4 +1,5 @@
 ﻿using FirstBot.Dialogs;
+using FirstBot.Dialogs.DialogRework;
 using FirstBot.State;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -25,6 +26,10 @@ namespace FirstBot
             dialogSet.Add(new FlightDialog());
             dialogSet.Add(new TestDialog());
             dialogSet.Add(new FuckDialog());
+
+            ////Test Dialogs
+            dialogSet.Add(new FlightNewDialog());
+            dialogSet.Add(new FoodNewDialog());
 
             //Prompts
             dialogSet.Add(new TextPrompt(nameof(TextPrompt)));
@@ -64,6 +69,7 @@ namespace FirstBot
                     if (dispatchDict.ContainsKey(intent))
                     {
                         await dispatchDict[intent](dialogContext);
+                        return;
                     }
                     else
                     {
@@ -92,13 +98,13 @@ namespace FirstBot
 
                 Func<DialogContext, Task<DialogTurnResult>> foodDialogFunc = async (context) =>
                 {
-                    return await context.BeginDialogAsync(nameof(FoodDialog));
+                    return await context.BeginDialogAsync(nameof(FoodNewDialog));
                 };
                 dispatchDict.Add(IntentNames.FOOD, foodDialogFunc);
 
                 Func<DialogContext, Task<DialogTurnResult>> flightDialogFunc = async (context) =>
                 {
-                    return await context.BeginDialogAsync(nameof(FlightDialog));
+                    return await context.BeginDialogAsync(nameof(FlightNewDialog));
                 };
                 dispatchDict.Add(IntentNames.FLIGHT, flightDialogFunc);
             }

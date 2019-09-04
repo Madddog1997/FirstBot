@@ -12,3 +12,4 @@ C:\Users\MichalHornak\Desktop\FirstBot-master\obj\Debug\netcoreapp2.1\FirstBot.A
 C:\Users\MichalHornak\Desktop\FirstBot-master\obj\Debug\netcoreapp2.1\FirstBot.RazorTargetAssemblyInfo.cache
 C:\Users\MichalHornak\Desktop\FirstBot-master\obj\Debug\netcoreapp2.1\FirstBot.dll
 C:\Users\MichalHornak\Desktop\FirstBot-master\obj\Debug\netcoreapp2.1\FirstBot.pdb
+C:\Users\MichalHornak\Desktop\FirstBot-master\obj\Debug\netcoreapp2.1\FirstBot.csprojAssemblyReference.cache

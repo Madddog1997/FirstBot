@@ -21,7 +21,7 @@ namespace FirstBot
                     Title = "Confirm Your Order",
                     Subtitle = $"Here is your {details.Intent} : ",
                     Text = $"Origin : {details.OriginStep}, Destination : {details.DestinationStep}, Time : {details.DateStep}",
-                    Buttons = new List<CardAction> { new CardAction(ActionTypes.MessageBack, "Yes", value: output), new CardAction(ActionTypes.MessageBack, "No", value: new Details("Cancel", details.Intent)) },
+                    Buttons = new List<CardAction> { new CardAction(ActionTypes.MessageBack, "Yes", value: output, text: "Confirmed"), new CardAction(ActionTypes.MessageBack, "No", value: new Details("Cancel", details.Intent), text: "Canceled")},
                 };
                 return card;
             }
@@ -41,15 +41,6 @@ namespace FirstBot
         }
     }
 
-    public class FlightDetails : Details
-    {
-        public string StepID { get; set; }
-
-        public string OriginStep { get; set; }
-        public string DestinationStep { get; set; }
-        public string DateStep { get; set; }
-    }
-
     public class Details
     {
         public Details(string intentAction = null, string intent = null)
@@ -62,11 +53,16 @@ namespace FirstBot
         public string Intent { get; set; }
     }
 
+    public class FlightDetails : Details
+    {
+        public string OriginStep { get; set; }
+        public string DestinationStep { get; set; }
+        public string DateStep { get; set; }
+    }
+
     public class FoodDetails : Details
     //{"stepID":"ConfirmationStep","Order":"Pizza order","SizeStep":"Medium","SauceStep":"tomato","CheeseStep":"eidam","ToppingStep":"salami"}
     {
-        public string StepID { get; set; }
-
         public string SizeStep { get; set; }
         public string SauceStep { get; set; }
         public string CheeseStep { get; set; }

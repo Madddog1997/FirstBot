@@ -1,12 +1,7 @@
-﻿using FirstBot.Dialogs;
-using FirstBot.State;
+﻿using FirstBot.Dialogs.DialogRework;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,13 +29,13 @@ namespace FirstBot.Dialogs
 
             return await dc.BeginDialogAsync(nameof(TestDialog));
 
-            //if(intent == "Food")
+            //if (intent == "Food")
             //{
-            //    return await dc.BeginDialogAsync(nameof(FoodDialog));
+            //    return await dc.BeginDialogAsync(nameof(FoodNewDialog));
             //}
             //else if (intent == "Flight")
             //{
-            //    return await dc.BeginDialogAsync(nameof(FlightDialog));
+            //    return await dc.BeginDialogAsync(nameof(FlightNewDialog));
             //}
             //else
             //{
