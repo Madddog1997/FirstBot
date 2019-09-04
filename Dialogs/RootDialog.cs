@@ -27,21 +27,21 @@ namespace FirstBot.Dialogs
             RecognizerResult result = await _recognizer.RecognizeAsync(dc.Context, cancellationToken);
             string intent = result.GetTopScoringIntent().intent;
 
-            return await dc.BeginDialogAsync(nameof(TestDialog));
+            //return await dc.BeginDialogAsync(nameof(TestDialog));
 
-            //if (intent == "Food")
-            //{
-            //    return await dc.BeginDialogAsync(nameof(FoodNewDialog));
-            //}
-            //else if (intent == "Flight")
-            //{
-            //    return await dc.BeginDialogAsync(nameof(FlightNewDialog));
-            //}
-            //else
-            //{
-            //    await dc.Context.SendActivityAsync("I don't understand");
-            //    return new DialogTurnResult(DialogTurnStatus.Waiting);
-            //}
+            if (intent == "Food")
+            {
+                return await dc.BeginDialogAsync(nameof(FoodNewDialog));
+            }
+            else if (intent == "Flight")
+            {
+                return await dc.BeginDialogAsync(nameof(FlightNewDialog));
+            }
+            else
+            {
+                await dc.Context.SendActivityAsync("I don't understand");
+                return new DialogTurnResult(DialogTurnStatus.Waiting);
+            }
         }
 
         public override async Task<DialogTurnResult> ResumeDialogAsync(DialogContext dc, DialogReason reason, object result = null, CancellationToken cancellationToken = default)
