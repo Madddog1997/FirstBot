@@ -70,7 +70,7 @@ namespace FirstBot.Dialogs
         {
             dc.ActiveDialog.State["stepID"] = "DateStep";
 
-            var cheeseMessage = MessageFactory.Text("When would you like take the fligh", "When would you like take the fligh", InputHints.ExpectingInput);
+            var cheeseMessage = MessageFactory.Text("When would you like to take the fligh", "When would you like to take the fligh", InputHints.ExpectingInput);
             return await dc.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = cheeseMessage }, cancellationToken);
         }
 
@@ -130,12 +130,12 @@ namespace FirstBot.Dialogs
             return await ContinueDialogAsync(dc, cancellationToken);
         }
 
-        [IntentActionAtribute(IntentNames.FLIGHT, IntentActions.FlightActions.Confirm)]
+        [IntentActionAtribute(DialogNames.FLIGHT, IntentActions.FlightActions.Confirm)]
         public async Task JsonConfirmFlight(DialogContext dc) {
             await CardConfirmed(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FLIGHT, IntentActions.FlightActions.SelectDestination)]
+        [IntentActionAtribute(DialogNames.FLIGHT, IntentActions.FlightActions.SelectDestination)]
         public async Task JsonConfirmDestination(DialogContext dc)
         {
             var msg = dc.Context.Activity.Value.ToString();
@@ -147,7 +147,7 @@ namespace FirstBot.Dialogs
             await DateStep(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FLIGHT, IntentActions.FlightActions.Cancel)]
+        [IntentActionAtribute(DialogNames.FLIGHT, IntentActions.FlightActions.Cancel)]
         public async Task JsonCancelFlight(DialogContext dc)
         {
             dc.Context.Activity.Value = null;

@@ -37,7 +37,7 @@ namespace FirstBot
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Hi!"), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Hi! Write some shit"), cancellationToken);
                 }
             }
         }

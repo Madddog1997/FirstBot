@@ -19,7 +19,7 @@ namespace FirstBot.Dialogs
         public async override Task<DialogTurnResult> BeginDialogAsync2(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             await dc.Context.SendActivityAsync("Step One");
-            return await dc.Wait(StepTwo, nameof(TextPrompt));
+            return await dc.Wait(StepTwo, nameof(FuckDialog));
             //return dc.Wait(StepTwo);
         }
 

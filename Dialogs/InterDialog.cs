@@ -17,9 +17,10 @@ namespace FirstBot.Dialogs
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext outerDc, object options = null, CancellationToken cancellationToken = default)
         {
-            if (await outerDc.HandleValueRedirection(this))
+            var redirectionRes = await outerDc.HandleValueRedirection(this);
+            if (redirectionRes != null)
             {
-                return new DialogTurnResult(DialogTurnStatus.Complete);
+                return redirectionRes;
             }
 
             return await BeginDialogAsync2(outerDc, options, cancellationToken);
@@ -59,8 +60,8 @@ namespace FirstBot.Dialogs
                 }
             }
 
-            await dc.Context.SendActivityAsync("No next step defined");
-            return new DialogTurnResult(DialogTurnStatus.Waiting);
+            await dc.Context.SendActivityAsync("No next step defined returning to parent");
+            return new DialogTurnResult(DialogTurnStatus.Complete);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FirstBot.Dialogs;
+using FirstBot.Dialogs.DialogRework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,12 +12,11 @@ namespace FirstBot
 
     }
 
-    public static class IntentNames
+    public static class DialogNames
     {
-        public const string FOOD = "Food";
-        public const string FLIGHT = "Flight";
-        public const string NONE = "Root";
-        public const string CANCEL = "Cancel";
+        public const string FOOD = nameof(FoodNewDialog);
+        public const string FLIGHT = nameof(FlightNewDialog);
+        public const string NONE = nameof(RootDialog);
     }
 
     public static class IntentActions

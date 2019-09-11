@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace FirstBot
 {
-    public delegate Task JsonCommandHandler(DialogContext context);
+    public delegate Task<DialogTurnResult> JsonCommandHandler(DialogContext context);
     public static class ActivityExtensions
     {
-        public static async Task<bool> HandleValueRedirection<T>(this DialogContext context, T instanceReference, IMessageActivity optionalMessage = null) where T : class
+        public static async Task<DialogTurnResult> HandleValueRedirection<T>(this DialogContext context, T instanceReference, IMessageActivity optionalMessage = null) where T : class
         {
             var messageActivity = optionalMessage ?? context.Context.Activity.AsMessageActivity();
             var intentName = messageActivity?.Value.GetIntentFromMessageValue();
@@ -31,18 +31,17 @@ namespace FirstBot
 
                 if(method == null)
                 {
-                    return false;
+                    return null;
                 }
 
                 var handler = (JsonCommandHandler)Delegate.CreateDelegate(typeof(JsonCommandHandler), instanceReference, method, throwOnBindFailure: false);
 
                 if(handler != null)
                 {
-                    await handler(context);
+                    return await handler(context);
                 }
-                return true;
             }
-            return false;
+            return null;
         }
     }
 }

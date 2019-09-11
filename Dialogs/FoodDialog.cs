@@ -136,7 +136,7 @@ namespace FirstBot.Dialogs
             return await ContinueDialogAsync(dc, cancellationToken);
         }
 
-        [IntentActionAtribute(IntentNames.FOOD, IntentActions.FoodActions.Confirm)]
+        [IntentActionAtribute(DialogNames.FOOD, IntentActions.FoodActions.Confirm)]
         public async Task JsonConfirmFlight(DialogContext dc)
         {
             var msg = dc.Context.Activity.Value.ToString();
@@ -145,7 +145,7 @@ namespace FirstBot.Dialogs
             await CardConfirmed(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FOOD, IntentActions.FoodActions.SelectSauce)]
+        [IntentActionAtribute(DialogNames.FOOD, IntentActions.FoodActions.SelectSauce)]
         public async Task JsonSelectSauce(DialogContext dc)
         {
             var msg = dc.Context.Activity.Value.ToString();
@@ -157,7 +157,7 @@ namespace FirstBot.Dialogs
             await CheeseStep(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FOOD, IntentActions.FoodActions.Cancel)]
+        [IntentActionAtribute(DialogNames.FOOD, IntentActions.FoodActions.Cancel)]
         public async Task JsonCancelFlight(DialogContext dc)
         {
             var msg = dc.Context.Activity.Value.ToString();

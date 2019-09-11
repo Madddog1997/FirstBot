@@ -37,7 +37,7 @@ namespace FirstBot.Dialogs.DialogRework
         public async Task<DialogTurnResult> CardSauce(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             dc.ActiveDialog.State["stepID"] = "";
-            dc.ActiveDialog.State["Intent"] = "Food";
+            dc.ActiveDialog.State["Intent"] = nameof(FoodNewDialog);
             dc.ActiveDialog.State["IntentAction"] = "SelectSauce";
 
             var reply = MessageFactory.Attachment(new List<Attachment>());
@@ -66,7 +66,7 @@ namespace FirstBot.Dialogs.DialogRework
         public async Task<DialogTurnResult> ConfirmationStep(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             dc.ActiveDialog.State["stepID"] = "";
-            dc.ActiveDialog.State["Intent"] = "Food";
+            dc.ActiveDialog.State["Intent"] = nameof(FoodNewDialog);
             dc.ActiveDialog.State["IntentAction"] = "Confirm";
 
             var reply = MessageFactory.Attachment(new List<Attachment>());
@@ -100,17 +100,14 @@ namespace FirstBot.Dialogs.DialogRework
             return base.ContinueDialogAsync(dc, cancellationToken);
         }
 
-        [IntentActionAtribute(IntentNames.FOOD, IntentActions.FoodActions.Confirm)]
-        public async Task JsonConfirmFlight(DialogContext dc)
+        [IntentActionAtribute(DialogNames.FOOD, IntentActions.FoodActions.Confirm)]
+        public async Task<DialogTurnResult> JsonConfirmFlight(DialogContext dc)
         {
-            var msg = dc.Context.Activity.Value.ToString();
-            var parse = JsonConvert.DeserializeObject<FoodDetails>(msg);
-
-            await CardConfirmed(dc);
+            return await CardConfirmed(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FOOD, IntentActions.FoodActions.SelectSauce)]
-        public async Task JsonSelectSauce(DialogContext dc)
+        [IntentActionAtribute(DialogNames.FOOD, IntentActions.FoodActions.SelectSauce)]
+        public async Task<DialogTurnResult> JsonSelectSauce(DialogContext dc)
         {
             var msg = dc.Context.Activity.Value.ToString();
             var parse = JsonConvert.DeserializeObject<FoodDetails>(msg);
@@ -118,18 +115,15 @@ namespace FirstBot.Dialogs.DialogRework
             dc.ActiveDialog.State["SizeStep"] = parse.SizeStep;
             dc.ActiveDialog.State["SauceStep"] = parse.SauceStep;
 
-            await CheeseStep(dc);
+            return await CheeseStep(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FOOD, IntentActions.FoodActions.Cancel)]
-        public async Task JsonCancelFlight(DialogContext dc)
+        [IntentActionAtribute(DialogNames.FOOD, IntentActions.FoodActions.Cancel)]
+        public async Task<DialogTurnResult> JsonCancelFlight(DialogContext dc)
         {
-            var msg = dc.Context.Activity.Value.ToString();
-            var parse = JsonConvert.DeserializeObject<FoodDetails>(msg);
-
             dc.Context.Activity.Value = null;
 
-            await CardConfirmed(dc);
+            return await CardConfirmed(dc);
         }
     }
 }

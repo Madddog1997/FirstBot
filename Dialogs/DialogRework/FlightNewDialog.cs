@@ -38,7 +38,7 @@ namespace FirstBot.Dialogs.DialogRework
         public async Task<DialogTurnResult> CardDestination(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             dc.ActiveDialog.State["stepID"] = "";
-            dc.ActiveDialog.State["Intent"] = "Flight";
+            dc.ActiveDialog.State["Intent"] = nameof(FlightNewDialog);
             dc.ActiveDialog.State["IntentAction"] = "SelectDestination";
 
             var reply = MessageFactory.Attachment(new List<Attachment>());
@@ -52,14 +52,14 @@ namespace FirstBot.Dialogs.DialogRework
         { 
             dc.ActiveDialog.State["stepID"] = "DateStep";
 
-            await dc.Context.SendActivityAsync("When would you like take the fligh?");
+            await dc.Context.SendActivityAsync("When would you like to take the fligh?");
             return dc.Wait(ConfirmationStep);
         }
 
         public async Task<DialogTurnResult> ConfirmationStep(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             dc.ActiveDialog.State["stepID"] = "";
-            dc.ActiveDialog.State["Intent"] = "Flight";
+            dc.ActiveDialog.State["Intent"] = nameof(FlightNewDialog);
             dc.ActiveDialog.State["IntentAction"] = "Confirm";
 
             var reply = MessageFactory.Attachment(new List<Attachment>());
@@ -93,13 +93,13 @@ namespace FirstBot.Dialogs.DialogRework
             return base.ContinueDialogAsync(dc, cancellationToken);
         }
 
-        [IntentActionAtribute(IntentNames.FLIGHT, IntentActions.FlightActions.Confirm)]
-        public async Task JsonConfirmFlight(DialogContext dc) {
-            await CardConfirmed(dc);
+        [IntentActionAtribute(DialogNames.FLIGHT, IntentActions.FlightActions.Confirm)]
+        public async Task<DialogTurnResult> JsonConfirmFlight(DialogContext dc) {
+            return await CardConfirmed(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FLIGHT, IntentActions.FlightActions.SelectDestination)]
-        public async Task JsonConfirmDestination(DialogContext dc)
+        [IntentActionAtribute(DialogNames.FLIGHT, IntentActions.FlightActions.SelectDestination)]
+        public async Task<DialogTurnResult> JsonConfirmDestination(DialogContext dc)
         {
             var msg = dc.Context.Activity.Value.ToString();
             //dc.Context.Activity.Value = null;
@@ -109,15 +109,15 @@ namespace FirstBot.Dialogs.DialogRework
             dc.ActiveDialog.State["OriginStep"] = parse.OriginStep;
             dc.ActiveDialog.State["DestinationStep"] = parse.DestinationStep;
 
-            await DateStep(dc);
+            return await DateStep(dc);
         }
 
-        [IntentActionAtribute(IntentNames.FLIGHT, IntentActions.FlightActions.Cancel)]
-        public async Task JsonCancelFlight(DialogContext dc)
+        [IntentActionAtribute(DialogNames.FLIGHT, IntentActions.FlightActions.Cancel)]
+        public async Task<DialogTurnResult> JsonCancelFlight(DialogContext dc)
         {
             dc.Context.Activity.Value = null;
 
-            await CardConfirmed(dc);
+            return await CardConfirmed(dc);
         }
     }
 }
