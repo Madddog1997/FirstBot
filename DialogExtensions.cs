@@ -61,9 +61,8 @@ namespace FirstBot
                     await dialogContext.CancelAllDialogsAsync();
                     var intent = turnContext.Activity.Value.GetIntentFromMessageValue();
 
-                    await dialogContext.BeginDialogAsync(intent);
+                    DialogTurnResult result = await dialogContext.BeginDialogAsync(intent);
                     return;
-                    
                 }
                 #endregion
 

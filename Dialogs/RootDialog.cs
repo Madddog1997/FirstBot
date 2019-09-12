@@ -2,9 +2,6 @@
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace FirstBot.Dialogs
@@ -13,12 +10,6 @@ namespace FirstBot.Dialogs
     {
         public RootDialog(LuisRecognizer recognizer) : base(recognizer, nameof(RootDialog))
         {
-        }
-        
-        public override async Task<DialogTurnResult> ResumeDialogAsync(DialogContext dc, DialogReason reason, object result = null, CancellationToken cancellationToken = default)
-        {
-            await dc.Context.SendActivityAsync("End");
-            return await dc.EndDialogAsync("End root");
         }
 
         [DialogNameAtribute(DialogNames.FLIGHT)]

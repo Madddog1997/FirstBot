@@ -3,9 +3,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using System.Threading;
 using System.Threading.Tasks;
 using static FirstBot.BotExtensions.ContextExtensions;
-//Pridat na Azure Table Storage
-//-Ak sa resumne child dialog tak dokončiť resumeDialogAsync
-//-Vytvoriť delegáta pre názvy funckii 
+
 namespace FirstBot.Dialogs
 {
     public class TestDialog : InterDialog
